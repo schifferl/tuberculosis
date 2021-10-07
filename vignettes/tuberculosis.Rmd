@@ -23,7 +23,7 @@ vignette: >
 
 # The Pipeline
 
-To fully understand the provenance of data in the `r BiocStyle::Biocpkg("tuberculosis")` R/Bioconductor package, please see the [tuberculosis.pipeline](https://github.com/schifferl/tuberculosis.pipeline) GitHub repository; however, all users beyond the extremely curious can ignore these details without consequence. Yet, a brief summary of data processing is appropriate here. Microarray data were processed from raw files (e.g. `CEL` files) and background corrected using the normal-exponential method and the saddle-point approximation to maximum likelihood as implimented in the `r BiocStyle::Biocpkg("limma")` R/Bioconductor package; no normalization of expression values was done; where platforms necessitated it, the RMA (robust multichip average) algorithm without background correction or normalization was used to generate an expression matrix. Sequencing data were processed from raw files (i.e. `fastq` files) using the [nf-core/rnaseq](https://nf-co.re/rnaseq/1.4.2) pipeline inside a Singularity container; the GRCh38 genome build was used for alignment. Gene names for both microarray and sequencing data are HGNC-approved GRCh38 gene names from the [genenames.org](https://www.genenames.org/) REST API.
+To fully understand the provenance of data in the `r BiocStyle::Biocpkg("tuberculosis")` R/Bioconductor package, please see the [tuberculosis.pipeline](https://github.com/schifferl/tuberculosis.pipeline) GitHub repository; however, all users beyond the extremely curious can ignore these details without consequence. Yet, a brief summary of data processing is appropriate here. Microarray data were processed from raw files (e.g. `CEL` files) and background corrected using the normal-exponential method and the saddle-point approximation to maximum likelihood as implemented in the `r BiocStyle::Biocpkg("limma")` R/Bioconductor package; no normalization of expression values was done; where platforms necessitated it, the RMA (robust multichip average) algorithm without background correction or normalization was used to generate an expression matrix. Sequencing data were processed from raw files (i.e. `fastq` files) using the [nf-core/rnaseq](https://nf-co.re/rnaseq/1.4.2) pipeline inside a Singularity container; the GRCh38 genome build was used for alignment. Gene names for both microarray and sequencing data are HGNC-approved GRCh38 gene names from the [genenames.org](https://www.genenames.org/) REST API.
 
 # Installation
 
@@ -45,7 +45,7 @@ Most users should simply install `r BiocStyle::Biocpkg("tuberculosis")` from Bio
 
 To use the package without double colon syntax, it should be loaded as follows.
 
-```{r}
+```{r, message = FALSE}
 library(tuberculosis)
 ```
 
@@ -63,63 +63,62 @@ The function will print the names of matching resources as a message and return 
 
 # Getting Data
 
-To get data, users will also use the `tuberculosis` function, but with an additional argument, `dryrun = FALSE`. This will either download resources from `r BiocStyle::Biocpkg("ExperimentHub")` or load them from the user's local cache. If a resource has multiple creation dates, the most recent is selected by default.
+To get data, users will also use the `tuberculosis` function, but with an additional argument, `dryrun = FALSE`. This will either download resources from `r BiocStyle::Biocpkg("ExperimentHub")` or load them from the user's local cache. If a resource has multiple creation dates, the most recent is selected by default; add a date to override this behavior.
 
 ```{r}
-# waiting for ExperimentHub record insertion
-# tuberculosis("GSE103147", dryrun = FALSE) |>
-#   magrittr::use_series("2021-09-15.GSE103147") |>
-#   magrittr::extract(1:10, 1:10)
+tuberculosis("GSE103147", dryrun = FALSE)
 ```
 
-For now, the function returns a `list` of `matrix` objects where the rows are features (genes) and the columns are observations (samples). If multiple resources are requested, multiple resources will be returned, each as a list element.
+The function returns a `list` of `SummarizedExperiment` objects, each with a single assay, `exprs`, where the rows are features (genes) and the columns are observations (samples). If multiple resources are requested, multiple resources will be returned, each as a `list` element.
+
+```{r}
+tuberculosis("GSE10799.", dryrun = FALSE)
+```
+
+The `assay` of each `SummarizedExperiment` object is named `exprs` rather than `counts` because it can come from either a microarray or a sequencing platform. If `colnames` begin with `GSE`, data comes from a microarray platform; if `colnames` begin with `SRR`, data comes from a sequencing platform.
 
 # No Metadata?
 
-The `matrix` objects do not have sample metadata like a `SummarizedExperiment` object would, and this limits their use to unsupervised analyses for the time being. Sample metadata are currently undergoing manual curation with the same level of diligence that was applied in data processing, and will be included in the package when they are ready.
+The `SummarizedExperiment` objects do not have sample metadata as `colData`, and this limits their use to unsupervised analyses for the time being. Sample metadata are currently undergoing manual curation, with the same level of diligence that was applied in data processing, and will be included in the package when they are ready.
 
 # ML Analysis?
 
 No Bioconductor package is complete without at least a miniature demonstration analysis, but it is difficult to provide any substantial machine learning analysis without the necessary labels. Therefore, a only a dimension reduction, that is by no means machine learning, is provided here for example with the expectation that it will be replaced in the future.
 
-The largest resource available in the `r BiocStyle::Biocpkg("tuberculosis")` package comes from [GEO](https://www.ncbi.nlm.nih.gov/geo/) series accession `GSE103147`, data that was originally published by Zak *et al.* in 2016.[^1] To download this data for use in dimension reduction, the `tuberculosis` function is used; then, `magrittr::use_series` is used to select the `matrix` object from the `list` that was returned.
+The largest resource available in the `r BiocStyle::Biocpkg("tuberculosis")` package comes from [GEO](https://www.ncbi.nlm.nih.gov/geo/) series accession `GSE103147`, data that was originally published by Zak *et al.* in 2016.[^1] To download this data for use in dimension reduction, the `tuberculosis` function is used; then, `magrittr::use_series` is used to select the `SummarizedExperiment` object from the `list` that was returned.
 
 [^1]: Zak, D. E. *et al.* A blood RNA signature for tuberculosis disease risk: a prospective cohort study. *Lancet* **387**, 2312--2322 (2016)
 
 ```{r}
-# waiting for ExperimentHub record insertion
-# zak_data <-
-#     tuberculosis("GSE103147", dryrun = FALSE) |>
-#     magrittr::use_series("2021-09-15.GSE103147")
+zak_data <-
+    tuberculosis("GSE103147", dryrun = FALSE) |>
+    magrittr::use_series("2021-09-15.GSE103147")
 ```
 
-Even though they are not used, the sample identifiers (i.e. col names) of the `zak_data` will become the row names of the UMAP `data.frame`, and they are serialized below for use in setting row names later.
+Even though they are not used, the sample identifiers (i.e. column names) of the `zak_data` will become the row names of the UMAP `data.frame`, and they are serialized below for use in setting row names later.
 
 ```{r}
-# waiting for ExperimentHub record insertion
-# row_names <-
-#     base::colnames(zak_data)
+row_names <-
+    base::colnames(zak_data)
 ```
 
 Serialization is also done for column names, only they are created using `purrr::map_chr` instead. The embedding will be in two dimensions, therefore axis labels, `UMAP1` and `UMAP2`, are created.
 
 ```{r}
-# waiting for ExperimentHub record insertion
-# col_names <-
-#     purrr::map_chr(1:2, ~ base::paste("UMAP", .x, sep = ""))
+col_names <-
+    purrr::map_chr(1:2, ~ base::paste("UMAP", .x, sep = ""))
 ```
 
-The `r BiocStyle::Biocpkg("scater")` package is used to calculate UMAP coordinates, which are piped to `r BiocStyle::CRANpkg("magrittr")` to set the row and column names. Once the `matrix` is coerced to a `data.frame`, `r BiocStyle::CRANpkg("ggplot2")` is used to plot the embedding and `r BiocStyle::CRANpkg("hrbrthemes")` is used for theming.
+The `r BiocStyle::Biocpkg("scater")` package is used to calculate UMAP coordinates, which are piped to `r BiocStyle::CRANpkg("magrittr")` to set the row and column names. Once the `matrix` returned by `scater::calculateUMAP` is coerced to a `data.frame`, `r BiocStyle::CRANpkg("ggplot2")` is used to plot the embedding and `r BiocStyle::CRANpkg("hrbrthemes")` is used for theming.
 
-```{r}
-# waiting for ExperimentHub record insertion
-# scater::calculateUMAP(zak_data) |>
-#     magrittr::set_rownames(row_names) |>
-#     magrittr::set_colnames(col_names) |>
-#     base::as.data.frame() |>
-#     ggplot2::ggplot(mapping = ggplot2::aes(UMAP1, UMAP2)) +
-#     ggplot2::geom_point() +
-#     hrbrthemes::theme_ipsum_rc()
+```{r, fig.width = 8, fig.height = 8}
+scater::calculateUMAP(zak_data, exprs_values = "exprs") |>
+    magrittr::set_rownames(row_names) |>
+    magrittr::set_colnames(col_names) |>
+    base::as.data.frame() |>
+    ggplot2::ggplot(mapping = ggplot2::aes(UMAP1, UMAP2)) +
+    ggplot2::geom_point() +
+    hrbrthemes::theme_ipsum_rc()
 ```
 
 The embedding displays four distinct clusters, perhaps pertaining to stages of progression of tuberculosis infection as distinct classes; although, definitive conclusions are difficult to make without sufficient labeling of clinical sequelae. Again, as stated above, such labels are currently being curated, and will be included in the package when they are ready.

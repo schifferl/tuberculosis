@@ -24,7 +24,8 @@ prior to returning resources. When \code{dryrun = TRUE}, the function will print
 the names of matching resources as a message and return them invisibly as a
 character vector. When \code{dryrun = FALSE}, the function will either download
 resources from \code{ExperimentHub} or load them from the user’s local cache. If a
-resource has multiple creation dates, the most recent is selected by default.
+resource has multiple creation dates, the most recent is selected by default;
+add a date to override this behavior.
 }
 \examples{
 tuberculosis("GSE103147")

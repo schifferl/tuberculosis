@@ -27,7 +27,7 @@ ignore these details without consequence. Yet, a brief summary of data
 processing is appropriate here. Microarray data were processed from raw
 files (e.g. `CEL` files) and background corrected using the
 normal-exponential method and the saddle-point approximation to maximum
-likelihood as implimented in the
+likelihood as implemented in the
 *[limma](https://bioconductor.org/packages/3.14/limma)* R/Bioconductor
 package; no normalization of expression values was done; where platforms
 necessitated it, the RMA (robust multichip average) algorithm without
@@ -105,31 +105,106 @@ an additional argument, `dryrun = FALSE`. This will either download
 resources from
 *[ExperimentHub](https://bioconductor.org/packages/3.14/ExperimentHub)*
 or load them from the user’s local cache. If a resource has multiple
-creation dates, the most recent is selected by default.
+creation dates, the most recent is selected by default; add a date to
+override this behavior.
 
 ``` r
-# waiting for ExperimentHub record insertion
-# tuberculosis("GSE103147", dryrun = FALSE)
+tuberculosis("GSE103147", dryrun = FALSE)
 ```
 
-For now, the function returns a `list` of `matrix` objects where the
-rows are features (genes) and the columns are observations (samples). If
-multiple resources are requested, multiple resources will be returned,
-each as a list element.
+    ## snapshotDate(): 2021-10-06
+
+    ## $`2021-09-15.GSE103147`
+    ## class: SummarizedExperiment 
+    ## dim: 24353 1649 
+    ## metadata(0):
+    ## assays(1): exprs
+    ## rownames(24353): A1BG A1BG-AS1 ... ZZEF1 ZZZ3
+    ## rowData names(0):
+    ## colnames(1649): SRR5980424 SRR5980425 ... SRR5982072 SRR5982073
+    ## colData names(0):
+
+The function returns a `list` of `SummarizedExperiment` objects, each
+with a single assay, `exprs`, where the rows are features (genes) and
+the columns are observations (samples). If multiple resources are
+requested, multiple resources will be returned, each as a `list`
+element.
+
+``` r
+tuberculosis("GSE10799.", dryrun = FALSE)
+```
+
+    ## snapshotDate(): 2021-10-06
+
+    ## $`2021-09-15.GSE107991`
+    ## class: SummarizedExperiment 
+    ## dim: 24353 54 
+    ## metadata(0):
+    ## assays(1): exprs
+    ## rownames(24353): A1BG A1BG-AS1 ... ZZEF1 ZZZ3
+    ## rowData names(0):
+    ## colnames(54): SRR6369879 SRR6369880 ... SRR6369931 SRR6369932
+    ## colData names(0):
+    ## 
+    ## $`2021-09-15.GSE107992`
+    ## class: SummarizedExperiment 
+    ## dim: 24353 47 
+    ## metadata(0):
+    ## assays(1): exprs
+    ## rownames(24353): A1BG A1BG-AS1 ... ZZEF1 ZZZ3
+    ## rowData names(0):
+    ## colnames(47): SRR6369945 SRR6369946 ... SRR6369990 SRR6369991
+    ## colData names(0):
+    ## 
+    ## $`2021-09-15.GSE107993`
+    ## class: SummarizedExperiment 
+    ## dim: 24353 138 
+    ## metadata(0):
+    ## assays(1): exprs
+    ## rownames(24353): A1BG A1BG-AS1 ... ZZEF1 ZZZ3
+    ## rowData names(0):
+    ## colnames(138): SRR6370167 SRR6370168 ... SRR6370303 SRR6370304
+    ## colData names(0):
+    ## 
+    ## $`2021-09-15.GSE107994`
+    ## class: SummarizedExperiment 
+    ## dim: 24353 175 
+    ## metadata(0):
+    ## assays(1): exprs
+    ## rownames(24353): A1BG A1BG-AS1 ... ZZEF1 ZZZ3
+    ## rowData names(0):
+    ## colnames(175): SRR6369992 SRR6369993 ... SRR6370165 SRR6370166
+    ## colData names(0):
+    ## 
+    ## $`2021-09-15.GSE107995`
+    ## class: SummarizedExperiment 
+    ## dim: 24353 414 
+    ## metadata(0):
+    ## assays(1): exprs
+    ## rownames(24353): A1BG A1BG-AS1 ... ZZEF1 ZZZ3
+    ## rowData names(0):
+    ## colnames(414): SRR6369879 SRR6369880 ... SRR6370303 SRR6370304
+    ## colData names(0):
+
+The `assay` of each `SummarizedExperiment` object is named `exprs`
+rather than `counts` because it can come from either a microarray or a
+sequencing platform. If `colnames` begin with `GSE`, data comes from a
+microarray platform; if `colnames` begin with `SRR`, data comes from a
+sequencing platform.
 
 ## No Metadata?
 
-The `matrix` objects do not have sample metadata like a
-`SummarizedExperiment` object would, and this limits their use to
-unsupervised analyses for the time being. Sample metadata are currently
-undergoing manual curation with the same level of diligence that was
-applied in data processing, and will be included in the package when
-they are ready.
+The `SummarizedExperiment` objects do not have sample metadata as
+`colData`, and this limits their use to unsupervised analyses for the
+time being. Sample metadata are currently undergoing manual curation,
+with the same level of diligence that was applied in data processing,
+and will be included in the package when they are ready.
 
 ## Contributing
 
 To contribute to the
 *[tuberculosis](https://bioconductor.org/packages/3.14/tuberculosis)*
-R/Bioconductor package, first read the contributing guide and then open
-an issue. Also note that in contributing you agree to abide by the code
-of conduct.
+R/Bioconductor package, first read the [contributing
+guidelines](CONTRIBUTING.md) and then open an issue. Also note that in
+contributing you agree to abide by the [code of
+conduct](CODE_OF_CONDUCT.md).

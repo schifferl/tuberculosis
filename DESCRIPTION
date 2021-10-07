@@ -18,24 +18,30 @@ biocViews:
     MicroarrayData,
     SequencingData,
     ReproducibleResearch
-Version: 0.99.0
+Version: 0.99.1
 License: Artistic-2.0
 Depends:
-    R (>= 4.1.0)
+    R (>= 4.1.0),
+    SummarizedExperiment
 Imports:
-    stringr
+    AnnotationHub,
+    ExperimentHub,
+    S4Vectors,
+    dplyr,
+    magrittr,
+    purrr,
+    rlang,
+    stringr,
+    tibble,
+    tidyr
 Suggests:
     BiocStyle,
-    dplyr,
     ggplot2,
     hrbrthemes,
     knitr,
-    magrittr,
-    purrr,
     readr,
     rmarkdown,
     scater,
-    tidyr,
     usethis,
     utils
 URL: https://github.com/schifferl/tuberculosis
