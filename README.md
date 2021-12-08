@@ -1,13 +1,16 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# tuberculosis
+# tuberculosis <img src='man/figures/logo.png' align="right" height="138" />
 
 <!-- badges: start -->
+
+[![code
+quality](https://img.shields.io/codefactor/grade/github/schifferl/tuberculosis)](https://www.codefactor.io/repository/github/schifferl/tuberculosis)
 <!-- badges: end -->
 
 The
-*[tuberculosis](https://bioconductor.org/packages/3.14/tuberculosis)*
+*[tuberculosis](https://bioconductor.org/packages/3.15/tuberculosis)*
 R/Bioconductor package features tuberculosis gene expression data for
 machine learning. All human samples from
 [GEO](https://www.ncbi.nlm.nih.gov/geo/) that did not come from cell
@@ -19,7 +22,7 @@ through a hyper-standardized, reproducible pipeline.
 ## The Pipeline
 
 To fully understand the provenance of data in the
-*[tuberculosis](https://bioconductor.org/packages/3.14/tuberculosis)*
+*[tuberculosis](https://bioconductor.org/packages/3.15/tuberculosis)*
 R/Bioconductor package, please see the
 [tuberculosis.pipeline](https://github.com/schifferl/tuberculosis.pipeline)
 GitHub repository; however, all users beyond the extremely curious can
@@ -28,7 +31,7 @@ processing is appropriate here. Microarray data were processed from raw
 files (e.g. `CEL` files) and background corrected using the
 normal-exponential method and the saddle-point approximation to maximum
 likelihood as implemented in the
-*[limma](https://bioconductor.org/packages/3.14/limma)* R/Bioconductor
+*[limma](https://bioconductor.org/packages/3.15/limma)* R/Bioconductor
 package; no normalization of expression values was done; where platforms
 necessitated it, the RMA (robust multichip average) algorithm without
 background correction or normalization was used to generate an
@@ -43,7 +46,7 @@ REST API.
 ## Installation
 
 To install
-*[tuberculosis](https://bioconductor.org/packages/3.14/tuberculosis)*
+*[tuberculosis](https://bioconductor.org/packages/3.15/tuberculosis)*
 from Bioconductor, use
 *[BiocManager](https://CRAN.R-project.org/package=BiocManager)* as
 follows.
@@ -53,7 +56,7 @@ BiocManager::install("tuberculosis")
 ```
 
 To install
-*[tuberculosis](https://bioconductor.org/packages/3.14/tuberculosis)*
+*[tuberculosis](https://bioconductor.org/packages/3.15/tuberculosis)*
 from GitHub, use
 *[BiocManager](https://CRAN.R-project.org/package=BiocManager)* as
 follows.
@@ -63,7 +66,7 @@ BiocManager::install("schifferl/tuberculosis", dependencies = TRUE, build_vignet
 ```
 
 Most users should simply install
-*[tuberculosis](https://bioconductor.org/packages/3.14/tuberculosis)*
+*[tuberculosis](https://bioconductor.org/packages/3.15/tuberculosis)*
 from Bioconductor.
 
 ## Load Package
@@ -103,7 +106,7 @@ resources use `"."` for the `pattern` argument.
 To get data, users will also use the `tuberculosis` function, but with
 an additional argument, `dryrun = FALSE`. This will either download
 resources from
-*[ExperimentHub](https://bioconductor.org/packages/3.14/ExperimentHub)*
+*[ExperimentHub](https://bioconductor.org/packages/3.15/ExperimentHub)*
 or load them from the user’s local cache. If a resource has multiple
 creation dates, the most recent is selected by default; add a date to
 override this behavior.
@@ -112,16 +115,16 @@ override this behavior.
 tuberculosis("GSE103147", dryrun = FALSE)
 ```
 
-    ## snapshotDate(): 2021-10-06
+    ## snapshotDate(): 2021-11-24
 
     ## $`2021-09-15.GSE103147`
     ## class: SummarizedExperiment 
     ## dim: 24353 1649 
     ## metadata(0):
     ## assays(1): exprs
-    ## rownames(24353): A1BG A1BG-AS1 ... ZZEF1 ZZZ3
+    ## rownames: NULL
     ## rowData names(0):
-    ## colnames(1649): SRR5980424 SRR5980425 ... SRR5982072 SRR5982073
+    ## colnames: NULL
     ## colData names(0):
 
 The function returns a `list` of `SummarizedExperiment` objects, each
@@ -134,16 +137,16 @@ element.
 tuberculosis("GSE10799.", dryrun = FALSE)
 ```
 
-    ## snapshotDate(): 2021-10-06
+    ## snapshotDate(): 2021-11-24
 
     ## $`2021-09-15.GSE107991`
     ## class: SummarizedExperiment 
     ## dim: 24353 54 
     ## metadata(0):
     ## assays(1): exprs
-    ## rownames(24353): A1BG A1BG-AS1 ... ZZEF1 ZZZ3
+    ## rownames: NULL
     ## rowData names(0):
-    ## colnames(54): SRR6369879 SRR6369880 ... SRR6369931 SRR6369932
+    ## colnames: NULL
     ## colData names(0):
     ## 
     ## $`2021-09-15.GSE107992`
@@ -151,9 +154,9 @@ tuberculosis("GSE10799.", dryrun = FALSE)
     ## dim: 24353 47 
     ## metadata(0):
     ## assays(1): exprs
-    ## rownames(24353): A1BG A1BG-AS1 ... ZZEF1 ZZZ3
+    ## rownames: NULL
     ## rowData names(0):
-    ## colnames(47): SRR6369945 SRR6369946 ... SRR6369990 SRR6369991
+    ## colnames: NULL
     ## colData names(0):
     ## 
     ## $`2021-09-15.GSE107993`
@@ -161,9 +164,9 @@ tuberculosis("GSE10799.", dryrun = FALSE)
     ## dim: 24353 138 
     ## metadata(0):
     ## assays(1): exprs
-    ## rownames(24353): A1BG A1BG-AS1 ... ZZEF1 ZZZ3
+    ## rownames: NULL
     ## rowData names(0):
-    ## colnames(138): SRR6370167 SRR6370168 ... SRR6370303 SRR6370304
+    ## colnames: NULL
     ## colData names(0):
     ## 
     ## $`2021-09-15.GSE107994`
@@ -171,9 +174,9 @@ tuberculosis("GSE10799.", dryrun = FALSE)
     ## dim: 24353 175 
     ## metadata(0):
     ## assays(1): exprs
-    ## rownames(24353): A1BG A1BG-AS1 ... ZZEF1 ZZZ3
+    ## rownames: NULL
     ## rowData names(0):
-    ## colnames(175): SRR6369992 SRR6369993 ... SRR6370165 SRR6370166
+    ## colnames: NULL
     ## colData names(0):
     ## 
     ## $`2021-09-15.GSE107995`
@@ -181,9 +184,9 @@ tuberculosis("GSE10799.", dryrun = FALSE)
     ## dim: 24353 414 
     ## metadata(0):
     ## assays(1): exprs
-    ## rownames(24353): A1BG A1BG-AS1 ... ZZEF1 ZZZ3
+    ## rownames: NULL
     ## rowData names(0):
-    ## colnames(414): SRR6369879 SRR6369880 ... SRR6370303 SRR6370304
+    ## colnames: NULL
     ## colData names(0):
 
 The `assay` of each `SummarizedExperiment` object is named `exprs`
@@ -203,7 +206,7 @@ and will be included in the package when they are ready.
 ## Contributing
 
 To contribute to the
-*[tuberculosis](https://bioconductor.org/packages/3.14/tuberculosis)*
+*[tuberculosis](https://bioconductor.org/packages/3.15/tuberculosis)*
 R/Bioconductor package, first read the [contributing
 guidelines](CONTRIBUTING.md) and then open an issue. Also note that in
 contributing you agree to abide by the [code of
