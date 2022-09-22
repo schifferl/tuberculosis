@@ -1,0 +1,4 @@
+Title,Description,BiocVersion,Genome,SourceType,SourceUrl,SourceVersion,Species,TaxonomyId,Coordinate_1_based,DataProvider,Maintainer,RDataClass,DispatchClass,RDataPath,Tags
+2022-09-21.GSE193979,GSE193979,3.16,GRCh38,CSV,https://www.ncbi.nlm.nih.gov/geo/,NA,Homo sapiens,9606,FALSE,NCBI,Lucas Schiffer schiffer.lucas@gmail.com,matrix,Rda,tuberculosis/2022-09-21/2022-09-21.GSE193979.rda,tuberculosis
+2022-09-21.GSE196816-GPL31944,GSE196816-GPL31944,3.16,GRCh38,CSV,https://www.ncbi.nlm.nih.gov/geo/,NA,Homo sapiens,9606,FALSE,NCBI,Lucas Schiffer schiffer.lucas@gmail.com,matrix,Rda,tuberculosis/2022-09-21/2022-09-21.GSE196816-GPL31944.rda,tuberculosis
+2022-09-21.GSE198557,GSE198557,3.16,GRCh38,CSV,https://www.ncbi.nlm.nih.gov/geo/,NA,Homo sapiens,9606,FALSE,NCBI,Lucas Schiffer schiffer.lucas@gmail.com,matrix,Rda,tuberculosis/2022-09-21/2022-09-21.GSE198557.rda,tuberculosis

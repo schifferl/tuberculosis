@@ -1,5 +1,11 @@
 # tuberculosis 1.2.0
 
+* GEO Series GSE196816 is now available through tuberculosis
+* GEO Series GSE193979 is now available through tuberculosis
+* GEO Series GSE198557 is now available through tuberculosis
+
+# tuberculosis 1.2.0
+
 * GEO Series GSE126614 is now available through tuberculosis
 * GEO Series GSE152532 is now available through tuberculosis
 * GEO Series GSE174552 is now available through tuberculosis
