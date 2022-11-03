@@ -10,7 +10,7 @@ quality](https://img.shields.io/codefactor/grade/github/schifferl/tuberculosis)]
 <!-- badges: end -->
 
 The
-*[tuberculosis](https://bioconductor.org/packages/3.15/tuberculosis)*
+*[tuberculosis](https://bioconductor.org/packages/3.16/tuberculosis)*
 R/Bioconductor package features tuberculosis gene expression data for
 machine learning. All human samples from
 [GEO](https://www.ncbi.nlm.nih.gov/geo/) that did not come from cell
@@ -22,7 +22,7 @@ through a hyper-standardized, reproducible pipeline.
 ## The Pipeline
 
 To fully understand the provenance of data in the
-*[tuberculosis](https://bioconductor.org/packages/3.15/tuberculosis)*
+*[tuberculosis](https://bioconductor.org/packages/3.16/tuberculosis)*
 R/Bioconductor package, please see the
 [tuberculosis.pipeline](https://github.com/schifferl/tuberculosis.pipeline)
 GitHub repository; however, all users beyond the extremely curious can
@@ -31,7 +31,7 @@ processing is appropriate here. Microarray data were processed from raw
 files (e.g. `CEL` files) and background corrected using the
 normal-exponential method and the saddle-point approximation to maximum
 likelihood as implemented in the
-*[limma](https://bioconductor.org/packages/3.15/limma)* R/Bioconductor
+*[limma](https://bioconductor.org/packages/3.16/limma)* R/Bioconductor
 package; no normalization of expression values was done; where platforms
 necessitated it, the RMA (robust multichip average) algorithm without
 background correction or normalization was used to generate an
@@ -46,7 +46,7 @@ REST API.
 ## Installation
 
 To install
-*[tuberculosis](https://bioconductor.org/packages/3.15/tuberculosis)*
+*[tuberculosis](https://bioconductor.org/packages/3.16/tuberculosis)*
 from Bioconductor, use
 *[BiocManager](https://CRAN.R-project.org/package=BiocManager)* as
 follows.
@@ -56,7 +56,7 @@ BiocManager::install("tuberculosis")
 ```
 
 To install
-*[tuberculosis](https://bioconductor.org/packages/3.15/tuberculosis)*
+*[tuberculosis](https://bioconductor.org/packages/3.16/tuberculosis)*
 from GitHub, use
 *[BiocManager](https://CRAN.R-project.org/package=BiocManager)* as
 follows.
@@ -66,7 +66,7 @@ BiocManager::install("schifferl/tuberculosis", dependencies = TRUE, build_vignet
 ```
 
 Most users should simply install
-*[tuberculosis](https://bioconductor.org/packages/3.15/tuberculosis)*
+*[tuberculosis](https://bioconductor.org/packages/3.16/tuberculosis)*
 from Bioconductor.
 
 ## Load Package
@@ -106,7 +106,7 @@ resources use `"."` for the `pattern` argument.
 To get data, users will also use the `tuberculosis` function, but with
 an additional argument, `dryrun = FALSE`. This will either download
 resources from
-*[ExperimentHub](https://bioconductor.org/packages/3.15/ExperimentHub)*
+*[ExperimentHub](https://bioconductor.org/packages/3.16/ExperimentHub)*
 or load them from the user’s local cache. If a resource has multiple
 creation dates, the most recent is selected by default; add a date to
 override this behavior.
@@ -206,7 +206,7 @@ and will be included in the package when they are ready.
 ## Contributing
 
 To contribute to the
-*[tuberculosis](https://bioconductor.org/packages/3.15/tuberculosis)*
+*[tuberculosis](https://bioconductor.org/packages/3.16/tuberculosis)*
 R/Bioconductor package, first read the [contributing
 guidelines](CONTRIBUTING.md) and then open an issue. Also note that in
 contributing you agree to abide by the [code of
