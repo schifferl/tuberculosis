@@ -117,8 +117,7 @@ scater::calculateUMAP(zak_data, exprs_values = "exprs") |>
     magrittr::set_colnames(col_names) |>
     base::as.data.frame() |>
     ggplot2::ggplot(mapping = ggplot2::aes(UMAP1, UMAP2)) +
-    ggplot2::geom_point() +
-    hrbrthemes::theme_ipsum()
+    ggplot2::geom_point()
 ```
 
 The embedding displays four distinct clusters, perhaps pertaining to stages of progression of tuberculosis infection as distinct classes; although, definitive conclusions are difficult to make without sufficient labeling of clinical sequelae. Again, as stated above, such labels are currently being curated, and will be included in the package when they are ready.
